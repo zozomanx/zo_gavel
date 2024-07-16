@@ -1,20 +1,10 @@
 -- Coords to the Gavel
 local Gavel = vec3(206.6300, -407.0976, 48.8915) -- CHANGE TO PROPER COORDS / DESK IN COURTROOM
 
+-- Client event for gavel_one
 RegisterNetEvent('zogavel:gavel_one')
 AddEventHandler('zogavel:gavel_one', function(MaxDistance, SoundFileOne, SoundVolume)
-    -- Debug
-    --[[     print('Server source ' .. PlayerNetId)
-    print('Maxdistance ' .. MaxDistance)
-    print('distIs ' .. DistIs)
-    print('eCoords ' .. eCoords)
-    print('lCoords ' .. lCoords) ]]
-
-    local lCoords = GetEntityCoords(GetPlayerPed(-1))
-    local eCoords = Gavel
-    local DistIs  = Vdist(lCoords.x, lCoords.y, lCoords.z, eCoords.x, eCoords.y, eCoords.z)
-
-    if(DistIs <= MaxDistance) then
+    if(CalcDistance() <= MaxDistance) then
         SendNUIMessage({
             transactionType     = 'playSound',
             transactionFile     = SoundFileOne,
@@ -23,20 +13,10 @@ AddEventHandler('zogavel:gavel_one', function(MaxDistance, SoundFileOne, SoundVo
     end
 end)
 
+-- Client event for gavel_one
 RegisterNetEvent('zogavel:gavel_three')
 AddEventHandler('zogavel:gavel_three', function(MaxDistance, SoundFileThree, SoundVolume)
-    -- Debug
-    --[[     print('Server source ' .. PlayerNetId)
-    print('Maxdistance ' .. MaxDistance)
-    print('lCoords ' .. lCoords)
-    print('eCoords ' .. eCoords)
-    print('distIs ' .. DistIs) ]]
-
-    local lCoords = GetEntityCoords(GetPlayerPed(-1))
-    local eCoords = Gavel
-    local DistIs  = Vdist(lCoords.x, lCoords.y, lCoords.z, eCoords.x, eCoords.y, eCoords.z)
-    
-    if(DistIs <= MaxDistance) then
+    if(CalcDistance() <= MaxDistance) then
         SendNUIMessage({
             transactionType     = 'playSound',
             transactionFile     = SoundFileThree,
@@ -44,6 +24,15 @@ AddEventHandler('zogavel:gavel_three', function(MaxDistance, SoundFileThree, Sou
         })
     end
 end)
+
+-- Calculate the distance from the Gavel and the player
+function CalcDistance()
+    local lCoords = GetEntityCoords(GetPlayerPed(-1))
+    local eCoords = Gavel
+    local DistIs  = Vdist(lCoords.x, lCoords.y, lCoords.z, eCoords.x, eCoords.y, eCoords.z)
+
+    return DistIs
+end
 
 
 -- Set ox_target BoxZone
@@ -72,7 +61,7 @@ exports.ox_target:addBoxZone(
     }
 )
 
--- EventHandler for clicking inside of the BoxZone
+-- EventHandler for clicking inside of the BoxZone for gavel_one
 AddEventHandler(
     "zogavel:gavel_one_server",
     function()
@@ -80,7 +69,7 @@ AddEventHandler(
     end
 )
 
--- EventHandler for clicking inside of the BoxZone
+-- EventHandler for clicking inside of the BoxZone for gavel_three
 AddEventHandler(
     "zogavel:gavel_three_server",
     function()
