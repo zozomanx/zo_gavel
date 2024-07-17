@@ -1,18 +1,18 @@
--- Initialize config
+-- Initialize Config
 local Config = Config or {}
 
 -- Client event to handle gavel sounds
-RegisterNetEvent('zogavel:play_gavel_sound', function(SoundFile, SoundVolume)
+RegisterNetEvent('zogavel:play_gavel_sound', function(soundFile, soundVolume)
     SendNUIMessage({
         transactionType = 'playSound',
-        transactionFile = SoundFile,
-        transactionVolume = SoundVolume
+        transactionFile = soundFile,
+        transactionVolume = soundVolume
     })
 end)
 
 -- Set ox_target BoxZone
 exports.ox_target:addBoxZone({
-    coords = Config.GavelLocation, 
+    coords = Config.gavelLocation, 
     size = vec3(1, 1, 1),
     rotation = 45,
     debug = false,
@@ -23,7 +23,7 @@ exports.ox_target:addBoxZone({
             event = "zogavel:play_gavel_sound_server",
             icon = "fa-solid fa-gavel",
             label = "Gavel - one time",
-            SoundType = "one"
+            soundType = "one"
         },
         {
             -- groups = "judge", -- ADD PROPER JOB NAME
@@ -31,13 +31,13 @@ exports.ox_target:addBoxZone({
             event = "zogavel:play_gavel_sound_server",
             icon = "fa-solid fa-gavel",
             label = "Gavel - three times",
-            SoundType = "three"
+            soundType = "three"
         }
     }
 })
 
 -- EventHandler for clicking inside of the BoxZone
-AddEventHandler("zogavel:play_gavel_sound_server", function(Target_Data)
-    TriggerServerEvent('zogavel:play_gavel_sound', Target_Data.SoundType)
+AddEventHandler("zogavel:play_gavel_sound_server", function(targetData)
+    TriggerServerEvent('zogavel:play_gavel_sound', targetData.soundType)
 
 end)
