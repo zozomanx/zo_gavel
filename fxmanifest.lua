@@ -4,6 +4,11 @@ lua54       'yes'
 author      'zozoman'
 
 
+shared_scripts {
+    '@ox_lib/init.lua',
+    'config.lua'
+}
+
 client_scripts {
     'client.lua'
 }

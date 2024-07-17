@@ -1,21 +1,22 @@
--- Max distance you can be to hear sound
-local MaxDistance = 25
+-- Initialize config
+local Config = Config or {}
 
--- How loud the sound will be 0-1
-local SoundVolume = 1
+-- Server event to handle gavel sounds
+RegisterNetEvent('zogavel:play_gavel_sound', function(soundType)
+    local SoundFile
+    if soundType == "one" then
+        SoundFile = Config.SoundFileOne
+    elseif soundType == "three" then
+        SoundFile = Config.SoundFileThree
+    end
 
--- Sound file names
-local SoundFileOne = 'gavel_one'
-local SoundFileThree = 'gavel_three'
-
--- Server event for gavel_one
-RegisterNetEvent('zogavel:gavel_one')
-AddEventHandler('zogavel:gavel_one', function()
-    TriggerClientEvent('zogavel:gavel_one', -1, MaxDistance, SoundFileOne, SoundVolume)
+    for key, value in ipairs(NearbyPlayers(nearbyPlayers)) do
+        TriggerClientEvent('zogavel:play_gavel_sound', value.id, SoundFile, Config.SoundVolume)
+    end
+    
 end)
 
--- Server event for gavel_three
-RegisterNetEvent('zogavel:gavel_three')
-AddEventHandler('zogavel:gavel_three', function()
-    TriggerClientEvent('zogavel:gavel_three', -1, MaxDistance, SoundFileThree, SoundVolume)
-end)
+function NearbyPlayers()
+    local nearbyPlayers = lib.getNearbyPlayers(Config.GavelLocation, Config.MaxDistance) -- Example distance
+    return nearbyPlayers
+end
