@@ -1,13 +1,21 @@
 -- Initialize Config
 local Config = Config or {}
 
+local hasPlayerLoaded = false
+CreateThread(function()
+	Wait(10000)
+	hasPlayerLoaded = true
+end)
+
 -- Client event to handle gavel sounds
 RegisterNetEvent('zogavel:play_gavel_sound', function(soundFile, soundVolume)
-    SendNUIMessage({
-        transactionType = 'playSound',
-        transactionFile = soundFile,
-        transactionVolume = soundVolume
-    })
+    if hasPlayerLoaded then
+        SendNUIMessage({
+            transactionType = 'playSound',
+            transactionFile = soundFile,
+            transactionVolume = soundVolume
+        })
+    end
 end)
 
 -- Set ox_target BoxZone
