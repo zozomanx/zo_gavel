@@ -6,7 +6,7 @@ Config.GavelLocation = vec3(206.6300, -407.0976, 48.8915) -- CHANGE TO PROPER CO
 Config.MaxDistance = 25
 
 -- How loud the sound will be 0-1
-Config.SoundVolume = .6
+Config.SoundVolume = .8
 
 -- Sound file names
 Config.SoundFileOne = 'gavel_one'

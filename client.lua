@@ -22,7 +22,7 @@ exports.ox_target:addBoxZone({
             name = "Gavel",
             event = "zogavel:play_gavel_sound_server",
             icon = "fa-solid fa-gavel",
-            label = "Gavel - once",
+            label = "Gavel - one time",
             SoundType = "one"
         },
         {
@@ -30,7 +30,7 @@ exports.ox_target:addBoxZone({
             name = "Gavel",
             event = "zogavel:play_gavel_sound_server",
             icon = "fa-solid fa-gavel",
-            label = "Gavel - three",
+            label = "Gavel - three times",
             SoundType = "three"
         }
     }
